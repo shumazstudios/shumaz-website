@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shumaz Gaming — Level Up Your World</title>
+  <meta name="description" content="Shumaz Gaming creates next-generation gaming experiences. Bold games, immersive worlds, unforgettable moments." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Hero ── */
+    .hero {
+      min-height: calc(100vh - var(--nav-height));
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 2rem 4rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 60% 40%, rgba(124, 58, 237, 0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(6, 182, 212, 0.12) 0%, transparent 60%),
+        var(--bg-primary);
+      z-index: 0;
+    }
+    /* Grid lines */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(124, 58, 237, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 58, 237, 0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(124, 58, 237, 0.12);
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      border-radius: 100px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      color: var(--purple-light);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--cyan);
+    }
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -1px;
+    }
+    .hero-title span { display: block; }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-orb {
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%,
+        rgba(168, 85, 247, 0.35) 0%,
+        rgba(124, 58, 237, 0.2) 40%,
+        rgba(6, 182, 212, 0.1) 70%,
+        transparent 100%);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      box-shadow: 0 0 80px rgba(124, 58, 237, 0.25), inset 0 0 60px rgba(124, 58, 237, 0.1);
+      animation: pulse 4s ease-in-out infinite;
+      position: relative;
+    }
+    .hero-orb::before {
+      content: '';
+      position: absolute;
+      inset: 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      animation: rotate 12s linear infinite;
+    }
+    .hero-orb::after {
+      content: '⚡';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
+    }
+    .hero-stats {
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1.5rem;
+    }
+    .stat-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .stat-chip strong {
+      display: block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cyan-light);
+    }
+    .stat-chip span { font-size: 0.72rem; color: var(--text-muted); }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 80px rgba(124, 58, 237, 0.25), inset 0 0 60px rgba(124, 58, 237, 0.1); }
+      50% { box-shadow: 0 0 120px rgba(124, 58, 237, 0.4), inset 0 0 80px rgba(124, 58, 237, 0.15); }
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── About strip ── */
+    .about-strip {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2rem;
+    }
+    .about-strip-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-strip p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+
+    /* ── Features ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .feature-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.5));
+    }
+    .feature-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.5px;
+    }
+    .feature-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .cta-banner-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-banner-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .cta-banner .section-title { margin-bottom: 1rem; }
+    .cta-banner p { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
+    .cta-banner .hero-actions { justify-content: center; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">SHUMAZ</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-content">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <div class="hero-badge">Now building the next era of gaming</div>
+          <h1 class="hero-title">
+            <span>LEVEL UP</span>
+            <span class="gradient-text">YOUR WORLD</span>
+          </h1>
+          <p class="hero-desc">
+            Shumaz Gaming crafts immersive gaming experiences that push boundaries.
+            Bold gameplay, stunning worlds, and communities that last.
+          </p>
+          <div class="hero-actions">
+            <a href="contact.html" class="btn btn-primary">Get in Touch ↗</a>
+            <a href="#about" class="btn btn-outline">Learn More</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-orb"></div>
+          <div class="hero-stats">
+            <div class="stat-chip"><strong>100K+</strong><span>Players</span></div>
+            <div class="stat-chip"><strong>10+</strong><span>Titles</span></div>
+            <div class="stat-chip"><strong>5★</strong><span>Rated</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Strip -->
+    <section class="about-strip" id="about">
+      <div class="about-strip-inner">
+        <div>
+          <p class="section-label">Who We Are</p>
+          <h2 class="section-title">Built by Gamers,<br><span class="gradient-text">For Gamers</span></h2>
+          <div class="divider"></div>
+        </div>
+        <div>
+          <p>At Shumaz Gaming, we believe great games are more than entertainment — they're experiences that connect people, spark imagination, and create lasting memories.</p>
+          <p>Our team is passionate about every pixel, every mechanic, and every story we tell. We build games with intention, craftsmanship, and a deep love for the medium.</p>
+          <a href="contact.html" class="btn btn-outline" style="margin-top:1.5rem;">Work With Us →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+      <div class="section-inner">
+        <p class="section-label">What We Do</p>
+        <h2 class="section-title">Crafting Worlds<br><span class="gradient-text">Worth Exploring</span></h2>
+        <p class="section-subtitle">From concept to launch, we handle every aspect of game creation with care and expertise.</p>
+        <div class="features-grid">
+          <div class="card">
+            <div class="feature-icon">🎮</div>
+            <h3 class="feature-title">Game Development</h3>
+            <p class="feature-desc">From indie passion projects to large-scale titles, we build games that are polished, performant, and deeply fun to play.</p>
+          </div>
+          <div class="card">
+            <div class="feature-icon">🌍</div>
+            <h3 class="feature-title">World Building</h3>
+            <p class="feature-desc">We create rich, immersive universes with detailed lore, stunning art direction, and environments that feel alive.</p>
+          </div>
+          <div class="card">
+            <div class="feature-icon">⚔️</div>
+            <h3 class="feature-title">Competitive Design</h3>
+            <p class="feature-desc">Balanced, skill-driven mechanics that reward dedication and keep players coming back for "just one more match."</p>
+          </div>
+          <div class="card">
+            <div class="feature-icon">🤝</div>
+            <h3 class="feature-title">Community First</h3>
+            <p class="feature-desc">We build around our players — listening, iterating, and growing alongside the communities our games create.</p>
+          </div>
+          <div class="card">
+            <div class="feature-icon">📱</div>
+            <h3 class="feature-title">Multi-Platform</h3>
+            <p class="feature-desc">PC, console, and mobile — we ensure our experiences reach players wherever they prefer to play.</p>
+          </div>
+          <div class="card">
+            <div class="feature-icon">🚀</div>
+            <h3 class="feature-title">Continuous Updates</h3>
+            <p class="feature-desc">Our games evolve post-launch with regular content drops, seasonal events, and community-driven improvements.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner">
+      <div class="cta-banner-bg"></div>
+      <div class="cta-banner-inner">
+        <p class="section-label">Ready to Play?</p>
+        <h2 class="section-title">Let's Build Something <span class="gradient-text">Epic</span></h2>
+        <p>Have a project in mind, a partnership idea, or just want to say hi? We'd love to hear from you.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn btn-primary">Contact Us ↗</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">SHUMAZ</a>
+        <p>Building next-generation gaming experiences that connect players around the world.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Shumaz Gaming. All rights reserved.</span>
+      <span>Made with ⚡ by Shumaz</span>
+    </div>
+  </footer>
+
+</body>
+</html>
