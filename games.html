@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Games — Shumaz Gaming</title>
+  <meta name="description" content="Follow Shumaz Gaming's journey as we build our next titles. Go behind the scenes on games in development." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+
+    /* ── Hero ── */
+    .games-hero {
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+    .games-hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 70% at 20% 50%, rgba(124, 58, 237, 0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 60% at 80% 40%, rgba(6, 182, 212, 0.1) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .games-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .games-hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+    .games-hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      line-height: 1.75;
+    }
+    .games-hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .meta-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      color: var(--purple-light);
+      font-weight: 500;
+    }
+    .meta-pill.cyan {
+      background: rgba(6, 182, 212, 0.1);
+      border-color: rgba(6, 182, 212, 0.25);
+      color: var(--cyan-light);
+    }
+    .meta-pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 6px currentColor;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── Section title row ── */
+    .section-title-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ── Game card ── */
+    .game-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .game-card:hover {
+      border-color: var(--purple);
+      transform: translateY(-4px);
+      box-shadow: var(--glow-purple);
+    }
+
+    /* Card thumbnail */
+    .game-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .game-thumb-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .game-thumb-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .game-thumb-icon {
+      font-size: 4rem;
+      filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .game-thumb-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .game-thumb-tag.dev { border-color: rgba(124, 58, 237, 0.5); color: var(--purple-light); }
+    .game-thumb-tag.soon { border-color: rgba(6, 182, 212, 0.5); color: var(--cyan-light); }
+
+    /* Card body */
+    .game-body { padding: 1.75rem 2rem 2rem; }
+    .game-genre {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.5rem;
+    }
+    .game-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .game-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Progress bar */
+    .progress-wrap { margin-bottom: 1.5rem; }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .progress-label span:last-child { color: var(--purple-light); font-weight: 600; }
+    .progress-bar {
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      box-shadow: 0 0 8px rgba(124, 58, 237, 0.5);
+    }
+
+    /* Dev tags */
+    .game-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .game-tag {
+      background: rgba(124, 58, 237, 0.08);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      border-radius: 6px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Dev log snippet */
+    .dev-log {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--purple);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .dev-log-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--purple-light);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.4rem;
+    }
+    .dev-log p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .game-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .game-platform-icons { display: flex; gap: 0.4rem; }
+    .platform-chip {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Main grid ── */
+    .games-main { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+
+    /* ── Journey section ── */
+    .journey-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+    }
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .journey-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .journey-card:hover { border-color: var(--cyan); }
+    .journey-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+    .journey-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .journey-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── Newsletter strip ── */
+    .notify-strip {
+      border-top: 1px solid var(--border);
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .notify-strip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 100% at 50% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .notify-strip-inner { max-width: 540px; margin: 0 auto; position: relative; z-index: 1; }
+    .notify-strip h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .notify-strip p { color: var(--text-muted); margin-bottom: 1.75rem; font-size: 0.95rem; }
+    .notify-strip .btn { margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .games-main { grid-template-columns: 1fr; }
+      .journey-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .journey-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="Art/logo.png" alt="Shumaz Logo" />SHUMAZ</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html" class="active">Games</a></li>
+        <li><a href="sdk.html">SDK</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-content">
+
+    <!-- Hero -->
+    <div class="games-hero">
+      <div class="games-hero-bg"></div>
+      <div class="games-hero-inner">
+        <p class="section-label">Our Games</p>
+        <h1>Worlds We're <span class="gradient-text">Building</span></h1>
+        <div class="divider"></div>
+        <p>We're deep in the trenches crafting experiences that will redefine what players expect. Follow along as we build — the journey is part of the story.</p>
+        <div class="games-hero-meta">
+          <div class="meta-pill"><div class="meta-pill-dot"></div> Active Development</div>
+          <div class="meta-pill cyan"><div class="meta-pill-dot"></div> More Titles Coming</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Games Grid -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-title-row">
+          <div>
+            <p class="section-label">In Development</p>
+            <h2 class="section-title" style="margin-bottom:0">Games Being <span class="gradient-text">Forged</span></h2>
+          </div>
+        </div>
+
+        <div class="games-main">
+
+          <!-- Game 1 -->
+          <div class="game-card">
+            <div class="game-thumb">
+              <div class="game-thumb-bg" style="background: linear-gradient(135deg, #0f0520 0%, #1a0840 40%, #0a1a30 100%);"></div>
+              <!-- Animated background particles -->
+              <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 40%, rgba(124,58,237,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(6,182,212,0.3) 0%, transparent 45%);"></div>
+              <div class="game-thumb-content">
+                <span class="game-thumb-icon">⚔️</span>
+                <span class="game-thumb-tag dev">🔴 In Development</span>
+              </div>
+            </div>
+            <div class="game-body">
+              <p class="game-genre">Action RPG</p>
+              <h3 class="game-title">Project Nexus</h3>
+              <p class="game-desc">A dark action RPG set in a fractured sci-fi world where ancient magic and advanced technology collide. Battle through procedurally generated dungeons, forge unique weapons, and uncover a conspiracy that spans centuries.</p>
+
+              <div class="progress-wrap">
+                <div class="progress-label"><span>Development Progress</span><span>35%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+              </div>
+
+              <div class="game-tags">
+                <span class="game-tag">Procedural Generation</span>
+                <span class="game-tag">Roguelite</span>
+                <span class="game-tag">Dark Fantasy</span>
+                <span class="game-tag">Sci-Fi</span>
+              </div>
+
+              <div class="dev-log">
+                <div class="dev-log-header">📋 Latest Dev Log</div>
+                <p>Core combat loop is feeling great. We've just finished our first vertical slice — player movement, basic enemies, and the first dungeon biome. Next up: the skill tree system.</p>
+              </div>
+
+              <div class="game-footer">
+                <div class="game-platform-icons">
+                  <span class="platform-chip">💻 PC</span>
+                  <span class="platform-chip">🎮 Console</span>
+                </div>
+                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1.1rem; font-size:0.82rem;">Follow Progress →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 2 -->
+          <div class="game-card">
+            <div class="game-thumb">
+              <div class="game-thumb-bg" style="background: linear-gradient(135deg, #050f1a 0%, #0a2040 40%, #15051a 100%);"></div>
+              <div style="position:absolute;inset:0;background:radial-gradient(circle at 60% 30%, rgba(6,182,212,0.35) 0%, transparent 45%), radial-gradient(circle at 25% 70%, rgba(168,85,247,0.25) 0%, transparent 40%);"></div>
+              <div class="game-thumb-content">
+                <span class="game-thumb-icon">🚀</span>
+                <span class="game-thumb-tag soon">🔵 Early Concept</span>
+              </div>
+            </div>
+            <div class="game-body">
+              <p class="game-genre">Multiplayer Strategy</p>
+              <h3 class="game-title">Void Protocol</h3>
+              <p class="game-desc">A competitive 4v4 tactical strategy game set in deep space. Command your fleet, control resource nodes across procedurally generated star maps, and outmanoeuvre rivals in fast-paced 20-minute matches.</p>
+
+              <div class="progress-wrap">
+                <div class="progress-label"><span>Development Progress</span><span>12%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:12%"></div></div>
+              </div>
+
+              <div class="game-tags">
+                <span class="game-tag">Multiplayer</span>
+                <span class="game-tag">Strategy</span>
+                <span class="game-tag">Space</span>
+                <span class="game-tag">Competitive</span>
+              </div>
+
+              <div class="dev-log">
+                <div class="dev-log-header">📋 Latest Dev Log</div>
+                <p>Still in early concept and pre-production. We've locked in the core gameplay loop and are now prototyping the fleet command system. Art direction board is looking incredible.</p>
+              </div>
+
+              <div class="game-footer">
+                <div class="game-platform-icons">
+                  <span class="platform-chip">💻 PC</span>
+                  <span class="platform-chip">📱 Mobile</span>
+                </div>
+                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1.1rem; font-size:0.82rem;">Follow Progress →</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Follow the Journey -->
+    <section class="section journey-section">
+      <div class="section-inner">
+        <p class="section-label">Behind the Scenes</p>
+        <h2 class="section-title">Follow the <span class="gradient-text">Journey</span></h2>
+        <p class="section-subtitle">We build in public. Here's how you can stay in the loop and be part of the story.</p>
+        <div class="journey-grid">
+          <div class="journey-card">
+            <div class="journey-icon">📋</div>
+            <h3>Dev Logs</h3>
+            <p>Regular behind-the-scenes updates on what we're building, what's working, and what we're throwing out. Raw and honest.</p>
+          </div>
+          <div class="journey-card">
+            <div class="journey-icon">🎨</div>
+            <h3>Art & Design</h3>
+            <p>Early concept art, character designs, and world-building sketches shared before they're polished. See the ideas take shape.</p>
+          </div>
+          <div class="journey-card">
+            <div class="journey-icon">🧪</div>
+            <h3>Playtesting</h3>
+            <p>We invite community members to early playtest sessions. Your feedback directly shapes the games we're making.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notify CTA -->
+    <div class="notify-strip">
+      <div class="notify-strip-inner">
+        <p class="section-label">Stay in the Loop</p>
+        <h2>Want Early Access & <span class="gradient-text">Dev Updates?</span></h2>
+        <p>Be the first to know when we hit milestones, open playtesting, or launch. Drop us a message and we'll keep you in the loop.</p>
+        <a href="contact.html" class="btn btn-primary">Get Notified ↗</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo"><img src="Art/logo.png" alt="Shumaz Logo" />SHUMAZ</a>
+        <p>Building next-generation gaming experiences that connect players around the world.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="sdk.html">SDK</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Shumaz Gaming. All rights reserved.</span>
+      <span>Made with ⚡ by Shumaz</span>
+    </div>
+  </footer>
+
+</body>
+</html>
