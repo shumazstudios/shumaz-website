@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shumaz SDK — Elevate Your Game</title>
+  <meta name="description" content="The Shumaz SDK gives developers the tools to boost player retention, deepen engagement, and build games that players never want to put down." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+
+    /* ── SDK Hero ── */
+    .sdk-hero {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 2rem 4rem;
+    }
+    .sdk-hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 65% 70% at 50% 30%, rgba(6, 182, 212, 0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 55%),
+        var(--bg-primary);
+    }
+    .sdk-hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .sdk-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .sdk-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      border-radius: 100px;
+      padding: 0.4rem 1.2rem;
+      font-size: 0.8rem;
+      color: var(--cyan-light);
+      margin-bottom: 1.75rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .sdk-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--cyan);
+    }
+    .sdk-hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      font-weight: 900;
+      line-height: 1.08;
+      margin-bottom: 1.5rem;
+      letter-spacing: -1.5px;
+    }
+    .sdk-hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+    }
+    .sdk-hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+    .sdk-stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .sdk-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 2rem;
+      text-align: center;
+      min-width: 140px;
+    }
+    .sdk-stat strong {
+      display: block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--cyan), var(--purple-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sdk-stat span { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.5px; }
+
+    /* ── Value props ── */
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .value-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 2.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .value-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-3px);
+      box-shadow: var(--glow-cyan);
+    }
+    .value-card-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.5));
+    }
+    .value-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+    .value-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── How it works ── */
+    .how-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(16.66% + 1rem);
+      right: calc(16.66% + 1rem);
+      height: 1px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan), var(--purple));
+      opacity: 0.4;
+    }
+    .step {
+      text-align: center;
+      position: relative;
+    }
+    .step-number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+      position: relative;
+      z-index: 1;
+    }
+    .step h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .step p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; max-width: 240px; margin: 0 auto; }
+
+    /* ── Features list ── */
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s;
+    }
+    .feature-item:hover { border-color: var(--purple); }
+    .feature-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: #fff;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .feature-item span { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+    .feature-item strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ── Pricing teaser ── */
+    .pricing-section { text-align: center; }
+    .pricing-card {
+      max-width: 480px;
+      margin: 3rem auto 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124, 58, 237, 0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .pricing-card-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.5rem;
+    }
+    .pricing-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .pricing-price {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+    }
+    .pricing-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .pricing-features { list-style: none; text-align: left; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .pricing-features li::before {
+      content: '✦';
+      color: var(--cyan);
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    /* ── CTA ── */
+    .sdk-cta {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .sdk-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .sdk-cta-inner { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }
+    .sdk-cta p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 2rem; }
+
+    @media (max-width: 768px) {
+      .value-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .features-list { grid-template-columns: 1fr; }
+      .sdk-stats-row { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="Art/logo.png" alt="Shumaz Logo" />SHUMAZ</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="sdk.html" class="active">SDK</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-content">
+
+    <!-- Hero -->
+    <section class="sdk-hero">
+      <div class="sdk-hero-bg"></div>
+      <div class="sdk-hero-inner">
+        <div class="sdk-badge">Shumaz SDK — Now Available</div>
+        <h1 class="sdk-hero-title">
+          Elevate Your Game.<br>
+          <span class="gradient-text">Keep Players Forever.</span>
+        </h1>
+        <p class="sdk-hero-sub">
+          The Shumaz SDK gives developers the tools to skyrocket retention, deepen player engagement,
+          and build experiences that people never want to put down.
+        </p>
+        <div class="sdk-hero-actions">
+          <a href="contact.html" class="btn btn-primary">Get Early Access ↗</a>
+          <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
+        </div>
+        <div class="sdk-stats-row">
+          <div class="sdk-stat"><strong>3×</strong><span>Avg. Retention Boost</span></div>
+          <div class="sdk-stat"><strong>+68%</strong><span>Session Length</span></div>
+          <div class="sdk-stat"><strong>+40%</strong><span>Day-30 Return Rate</span></div>
+          <div class="sdk-stat"><strong>&lt;1hr</strong><span>Integration Time</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Value Props -->
+    <section class="section">
+      <div class="section-inner">
+        <p class="section-label">Why Shumaz SDK</p>
+        <h2 class="section-title">Built to Keep<br><span class="gradient-text">Players Coming Back</span></h2>
+        <p class="section-subtitle">Every feature is designed around one goal — making your game impossible to quit.</p>
+        <div class="value-grid">
+          <div class="value-card">
+            <div class="value-card-icon">📈</div>
+            <div>
+              <h3>Retention Engine</h3>
+              <p>Smart daily reward loops, streak systems, and re-engagement triggers that bring players back day after day — automatically.</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <div class="value-card-icon">🎯</div>
+            <div>
+              <h3>Deep Engagement Tools</h3>
+              <p>Seasonal events, challenges, and dynamic content systems that keep the game feeling fresh long after launch.</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <div class="value-card-icon">📊</div>
+            <div>
+              <h3>Player Analytics</h3>
+              <p>Understand exactly where players drop off, what they love, and how to keep them hooked — with real-time dashboards built for game devs.</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <div class="value-card-icon">🏆</div>
+            <div>
+              <h3>Social & Competition</h3>
+              <p>Leaderboards, friend challenges, and social layers that turn solo players into communities and communities into lifetime fans.</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <div class="value-card-icon">💎</div>
+            <div>
+              <h3>Monetisation Ready</h3>
+              <p>Battle pass frameworks, in-game economies, and offer systems that increase revenue without hurting player experience.</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <div class="value-card-icon">⚡</div>
+            <div>
+              <h3>Plug & Play Integration</h3>
+              <p>Drop our SDK into any engine — Unity, Unreal, or custom — in under an hour. Comprehensive docs, dedicated support, and no lock-in.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section how-section" id="how-it-works">
+      <div class="section-inner">
+        <p class="section-label">Simple Setup</p>
+        <h2 class="section-title">From Zero to <span class="gradient-text">Live in Hours</span></h2>
+        <p class="section-subtitle">We made integration as easy as possible so you can focus on building great games — not plumbing.</p>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3>Integrate</h3>
+            <p>Add the Shumaz SDK to your project with a single package import. Works with Unity, Unreal, and custom engines out of the box.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3>Configure</h3>
+            <p>Use our no-code dashboard to set up retention loops, events, and analytics tailored to your game's genre and audience.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3>Launch & Grow</h3>
+            <p>Ship your game and watch the data roll in. Tweak, optimise, and scale your retention strategy in real time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature List -->
+    <section class="section">
+      <div class="section-inner">
+        <p class="section-label">Everything You Need</p>
+        <h2 class="section-title">One SDK. <span class="gradient-text">Infinite Possibilities.</span></h2>
+        <p class="section-subtitle">A complete toolkit for player engagement — no third-party patchwork required.</p>
+        <div class="features-list">
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>Daily Login Rewards</strong> — Streak-based systems that reward consistency</span></div>
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>Push Notifications</strong> — Smart re-engagement nudges at the right moment</span></div>
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>Live Events Engine</strong> — Time-limited events that spike daily active users</span></div>
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>Global Leaderboards</strong> — Real-time competitive rankings across platforms</span></div>
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>Player Segmentation</strong> — Target the right players with the right content</span></div>
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>A/B Testing</strong> — Test reward structures and offers before full rollout</span></div>
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>Battle Pass System</strong> — Seasonal progression that drives long-term engagement</span></div>
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>Friend Challenges</strong> — Social hooks that virally grow your player base</span></div>
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>Churn Prediction</strong> — AI flags at-risk players before they leave</span></div>
+          <div class="feature-item"><div class="feature-check">✓</div><span><strong>Cross-Platform Sync</strong> — Seamless player data across mobile, PC, and console</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Teaser -->
+    <section class="section pricing-section" style="background: var(--bg-secondary); border-top: 1px solid var(--border);">
+      <div class="section-inner">
+        <p class="section-label">Early Access</p>
+        <h2 class="section-title">Be the First to<br><span class="gradient-text">Get the Edge</span></h2>
+        <p class="section-subtitle" style="margin: 0 auto;">We're onboarding a limited number of developers in our early access programme. Spots are limited.</p>
+        <div class="pricing-card">
+          <p class="pricing-card-label">Early Access</p>
+          <h3>Founding Developer</h3>
+          <div class="pricing-price">Free</div>
+          <p class="pricing-desc">For the first wave of developers who join us. Locked in forever.</p>
+          <ul class="pricing-features">
+            <li>Full SDK access — all features included</li>
+            <li>Priority support & onboarding call</li>
+            <li>Direct line to our product team</li>
+            <li>Influence the SDK roadmap</li>
+            <li>Locked-in founder pricing when we go paid</li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary" style="width:100%; justify-content:center;">Apply for Early Access ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="sdk-cta">
+      <div class="sdk-cta-inner">
+        <p class="section-label">Ready to Level Up?</p>
+        <h2 class="section-title">Your Players Deserve <span class="gradient-text">Better</span></h2>
+        <p>Stop losing players to churn. Start building games they can't put down.</p>
+        <a href="contact.html" class="btn btn-primary">Get Early Access ↗</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo"><img src="Art/logo.png" alt="Shumaz Logo" />SHUMAZ</a>
+        <p>Building next-generation gaming experiences that connect players around the world.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="sdk.html">SDK</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Shumaz Gaming. All rights reserved.</span>
+      <span>Made with ⚡ by Shumaz</span>
+    </div>
+  </footer>
+
+</body>
+</html>
