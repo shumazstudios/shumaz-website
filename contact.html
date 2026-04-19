@@ -231,7 +231,7 @@
           <div class="contact-item-icon">✉️</div>
           <div class="contact-item-text">
             <strong>Email</strong>
-            <span><a href="mailto:hello@shumaz.com">hello@shumaz.com</a></span>
+            <span><a href="mailto:shumazstudios@gmail.com">shumazstudios@gmail.com</a></span>
           </div>
         </div>
 
@@ -239,7 +239,7 @@
           <div class="contact-item-icon">🔒</div>
           <div class="contact-item-text">
             <strong>Privacy & Legal</strong>
-            <span><a href="mailto:privacy@shumaz.com">privacy@shumaz.com</a></span>
+            <span><a href="mailto:shumazstudios@gmail.com">shumazstudios@gmail.com</a></span>
           </div>
         </div>
 
@@ -247,7 +247,7 @@
           <div class="contact-item-icon">🤝</div>
           <div class="contact-item-text">
             <strong>Partnerships & Press</strong>
-            <span><a href="mailto:partners@shumaz.com">partners@shumaz.com</a></span>
+            <span><a href="mailto:shumazstudios@gmail.com">shumazstudios@gmail.com</a></span>
           </div>
         </div>
 
@@ -260,42 +260,42 @@
       <div class="contact-form-wrap">
         <h2>Send Us a Message</h2>
 
-        <div id="contactForm">
+        <form id="contactForm" action="https://formspree.io/f/xzdyvbyk" method="POST">
           <div class="form-row">
             <div class="form-group">
               <label for="firstName">First Name</label>
-              <input type="text" id="firstName" placeholder="Alex" />
+              <input type="text" id="firstName" name="firstName" placeholder="Alex" required />
             </div>
             <div class="form-group">
               <label for="lastName">Last Name</label>
-              <input type="text" id="lastName" placeholder="Johnson" />
+              <input type="text" id="lastName" name="lastName" placeholder="Johnson" />
             </div>
           </div>
 
           <div class="form-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="alex@example.com" />
+            <input type="email" id="email" name="email" placeholder="alex@example.com" required />
           </div>
 
           <div class="form-group">
             <label for="subject">Subject</label>
-            <select id="subject">
+            <select id="subject" name="subject">
               <option value="" disabled selected>Select a topic...</option>
-              <option value="general">General Inquiry</option>
-              <option value="partnership">Partnership / Collaboration</option>
-              <option value="press">Press & Media</option>
-              <option value="support">Player Support</option>
-              <option value="privacy">Privacy & Data</option>
-              <option value="other">Other</option>
+              <option value="General Inquiry">General Inquiry</option>
+              <option value="Partnership / Collaboration">Partnership / Collaboration</option>
+              <option value="Press & Media">Press & Media</option>
+              <option value="Player Support">Player Support</option>
+              <option value="Privacy & Data">Privacy & Data</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea id="message" placeholder="Tell us what's on your mind..."></textarea>
+            <textarea id="message" name="message" placeholder="Tell us what's on your mind..." required></textarea>
           </div>
 
-          <button class="btn btn-primary form-submit" onclick="handleSubmit(event)">
+          <button type="submit" class="btn btn-primary form-submit" id="submitBtn">
             Send Message ↗
           </button>
 
@@ -303,7 +303,7 @@
             By submitting this form, you agree to our
             <a href="privacy-policy.html">Privacy Policy</a>.
           </p>
-        </div>
+        </form>
 
         <div class="form-success" id="formSuccess">
           <div class="success-icon">✅</div>
@@ -344,21 +344,40 @@
   </footer>
 
   <script>
-    function handleSubmit(e) {
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
-      const firstName = document.getElementById('firstName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
 
-      if (!firstName || !email || !message) {
-        alert('Please fill in your name, email, and message before sending.');
-        return;
+      // Button loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          // Show success screen
+          form.style.display = 'none';
+          document.getElementById('formSuccess').style.display = 'block';
+        } else {
+          const data = await response.json();
+          const msg = data.errors ? data.errors.map(e => e.message).join(', ') : 'Something went wrong. Please try again.';
+          alert(msg);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message ↗';
+        }
+      } catch (err) {
+        alert('Network error. Please check your connection and try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message ↗';
       }
-
-      // Show success state
-      document.getElementById('contactForm').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    }
+    });
   </script>
 
 </body>
