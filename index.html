@@ -116,15 +116,23 @@
       border: 1px solid rgba(6, 182, 212, 0.2);
       animation: rotate 12s linear infinite;
     }
-    .hero-orb::after {
-      content: '⚡';
+    .hero-orb-logo {
       position: absolute;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 5rem;
-      filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
+    }
+    .hero-orb-logo img {
+      width: 180px;
+      height: 180px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.9)) brightness(1.15);
+      animation: floatLogo 3s ease-in-out infinite;
+    }
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
     }
     .hero-stats {
       position: absolute;
@@ -225,7 +233,7 @@
   <!-- Navigation -->
   <nav>
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">SHUMAZ</a>
+      <a href="index.html" class="nav-logo"><img src="art/Logo No BG.png" alt="Shumaz Logo" />SHUMAZ</a>
       <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -260,7 +268,11 @@
           </div>
         </div>
         <div class="hero-visual">
-          <div class="hero-orb"></div>
+          <div class="hero-orb">
+            <div class="hero-orb-logo">
+              <img src="art/Logo No BG.png" alt="Shumaz Gaming Logo" />
+            </div>
+          </div>
           <div class="hero-stats">
             <div class="stat-chip"><strong>100K+</strong><span>Players</span></div>
             <div class="stat-chip"><strong>10+</strong><span>Titles</span></div>
@@ -346,7 +358,7 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="nav-logo">SHUMAZ</a>
+        <a href="index.html" class="nav-logo"><img src="art/Logo No BG.png" alt="Shumaz Logo" />SHUMAZ</a>
         <p>Building next-generation gaming experiences that connect players around the world.</p>
       </div>
       <div class="footer-col">
