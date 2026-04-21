@@ -226,6 +226,30 @@
     .cta-banner .section-title { margin-bottom: 1rem; }
     .cta-banner p { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
     .cta-banner .hero-actions { justify-content: center; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .hero { padding: 3.5rem 1.25rem 2.5rem; }
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+      }
+      .hero-desc { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-orb { width: 220px; height: 220px; }
+      .hero-orb-logo img { width: 110px; height: 110px; }
+      .hero-stats {
+        position: static;
+        transform: none;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+        gap: 0.75rem;
+      }
+      .about-strip-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -383,5 +407,6 @@
     </div>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
